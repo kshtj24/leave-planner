@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             Padding="10"
+             x:Class="LeaveTracker.Views.LeaveDetailPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="Black"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ListView ItemsSource="{Binding LeaveDetails}" HasUnevenRows="True" SelectionMode="None" SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame VerticalOptions="Start" BackgroundColor="White" CornerRadius="5" Margin="0,0,0,10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding Name}" Grid.Row="0" FontSize="Medium"/>
+                                <Label Text="{Binding Id}" Grid.Row="1" FontSize="Small"/>
+                                <Label Text="{Binding LeaveType}" FontSize="Small" Grid.Row="0" Grid.RowSpan="2" HorizontalOptions="End" VerticalOptions="CenterAndExpand"/>
+                            </Grid>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>

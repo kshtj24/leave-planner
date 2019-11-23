@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="LeaveTracker.Views.LoginPage"
+             Padding="30"
+             BackgroundColor="White"
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>            
+            <Style TargetType="Frame">
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="Grid.Row" Value="1"/>
+                <Setter Property="Grid.RowSpan" Value="6"/>
+                <Setter Property="BackgroundColor" Value="#1976D2"/>
+                <Setter Property="CornerRadius" Value="5"/>
+                <Setter Property="HasShadow" Value="True"/>
+            </Style>
+            <Style x:Key="HeaderLabel" TargetType="Label">
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="Text" Value="Leave Planner"/>
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="TextColor" Value="Black"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout VerticalOptions="StartAndExpand" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <StackLayout Padding="70">
+                    <Image Source="loginImage.png"/>
+                    <Label Style="{StaticResource HeaderLabel}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Entry Placeholder="Enterprise ID" Text="{Binding UserID}"/>
+                    <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}"/>
+                    <Button Text="Log In" Command="{Binding LoginCommand}"/>
+                </StackLayout>
+            </StackLayout>
+            
+            <!--Activity indicator popup-->
+            <ContentView IsVisible="{Binding IsBusy}">
+                <Frame VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Padding="20" BackgroundColor="White">
+                    <StackLayout Orientation="Horizontal">
+                        <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                        <Label Text="{Binding ActivityIndicatorTitle}" HorizontalOptions="End" VerticalOptions="CenterAndExpand" TextColor="Black"/>
+                    </StackLayout>
+                </Frame>
+            </ContentView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,1 @@
+Xamarin based Mobile app for the team to plan leaves. Uses Firebase to store the data in NoSQL.

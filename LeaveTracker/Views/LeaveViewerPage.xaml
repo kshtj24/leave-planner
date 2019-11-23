@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             xmlns:c="clr-namespace:Prism.Converters"
+             Title="{Binding Title}"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="LeaveTracker.Views.LeaveViewerPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <c:ItemTappedEventArgsConverter x:Key="itemTappedEventArgsConverter"/>
+            <Style TargetType="Picker">
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="FontSize" Value="Small"/>
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+                <Setter Property="VerticalOptions"  Value="CenterAndExpand"/>
+                <Setter Property="TextColor" Value="Black"/>
+            </Style>
+            <Style TargetType="Frame">
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="Margin" Value="0,0,0,5"/>
+                <Setter Property="BorderColor" Value="LightGray"/>
+                <Setter Property="HasShadow" Value="True"/>
+            </Style>           
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+        <!--Initial display view-->
+        <StackLayout IsVisible="{Binding IsVisible}" BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center">
+                <Label Text="Please select Month and Year" FontSize="Medium" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="Black"/>
+                <Image Source="down.png" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="100" WidthRequest="100"/>
+            </StackLayout>
+        </StackLayout>
+
+        <!--Main display view-->
+        <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" Padding="10">
+            <ListView x:Name="calendar" ItemsSource="{Binding ListItems}" SeparatorVisibility="None" SelectionMode="None">
+                <ListView.Behaviors>
+                    <b:EventToCommandBehavior EventName="ItemTapped" Command="{Binding ItemTappedCommand}" EventArgsConverter="{StaticResource itemTappedEventArgsConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame>
+                                <StackLayout Orientation="Horizontal">
+                                    <BoxView BackgroundColor="{Binding HighlightColor}" WidthRequest="10"/>
+                                    <Label x:Name="Date" Text="{Binding Date}" Margin="20,0,0,0"/>
+                                    <Label Text="{Binding Day}" Margin="20,0,0,0"/>
+                                    <Label Text="{Binding LeaveCount}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End"/>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackLayout Orientation="Horizontal" VerticalOptions="End" Padding="5">
+                <Picker Title="Select Month" SelectedItem="{Binding Month}">
+                    <Picker.Items>
+                        <x:String>January</x:String>
+                        <x:String>February</x:String>
+                        <x:String>March</x:String>
+                        <x:String>April</x:String>
+                        <x:String>May</x:String>
+                        <x:String>June</x:String>
+                        <x:String>July</x:String>
+                        <x:String>August</x:String>
+                        <x:String>September</x:String>
+                        <x:String>October</x:String>
+                        <x:String>November</x:String>
+                        <x:String>December</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Picker Title="Select Year" SelectedItem="{Binding Year}">
+                    <Picker.Items>
+                        <x:String>2018</x:String>
+                        <x:String>2019</x:String>
+                        <x:String>2020</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Button VerticalOptions="CenterAndExpand" Text="View" Command="{Binding ViewCommand}"/>
+            </StackLayout>
+        </StackLayout>
+    
+        <!--Activity indicator popup-->
+        <ContentView IsVisible="{Binding IsBusy}">
+            <Frame VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Padding="20" CornerRadius="0">
+                <StackLayout Orientation="Horizontal">
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                    <Label Text="{Binding ActivityIndicatorTitle}" HorizontalOptions="End" VerticalOptions="CenterAndExpand" TextColor="Black"/>
+                </StackLayout>
+            </Frame>
+        </ContentView>
+    </AbsoluteLayout>
+</ContentPage>

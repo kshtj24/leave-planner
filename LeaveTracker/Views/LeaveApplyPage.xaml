@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             Padding="20"
+             x:Class="LeaveTracker.Views.LeaveApplyPage">
+
+    <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" Padding="20">
+            <StackLayout Spacing="20">
+                <StackLayout>
+                    <Label Text="Name" Margin="5,0,0,0"/>
+                    <Entry IsEnabled="False" Text="{Binding UserName}" FontSize="Medium"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Applying leave on" Margin="5,0,0,0"/>
+                    <DatePicker Format="dd/MMM/yyyy" Date="{Binding LeaveDate}" FontSize="Medium"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Leave type" Margin="5,0,0,0"/>
+                    <Picker Title="Select type" SelectedItem="{Binding LeaveType}" FontSize="Medium">
+                        <Picker.Items>
+                            <x:String>Vacation</x:String>
+                            <x:String>Sick</x:String>
+                            <x:String>Half day</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </StackLayout>
+                <Button Text="Apply" Command="{Binding ApplyLeaveCommand}"/>
+            </StackLayout>
+        </StackLayout>
+
+        <!--Activity indicator popup-->
+        <ContentView IsVisible="{Binding IsBusy}">
+            <Frame VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Padding="20">
+                <StackLayout Orientation="Horizontal">
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                    <Label Text="{Binding ActivityIndicatorTitle}" HorizontalOptions="End" VerticalOptions="CenterAndExpand" TextColor="Black"/>
+                </StackLayout>
+            </Frame>
+        </ContentView>
+    </AbsoluteLayout>
+</ContentPage>
